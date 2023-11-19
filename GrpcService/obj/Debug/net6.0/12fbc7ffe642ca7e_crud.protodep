@@ -1,0 +1,3 @@
+obj\Debug\net6.0\Protos/Crud.cs \
+obj\Debug\net6.0\Protos/CrudGrpc.cs: C:/Users/dulko/.nuget/packages/grpc.tools/2.40.0/build/native/include/google/protobuf/empty.proto\
+ Protos/crud.proto

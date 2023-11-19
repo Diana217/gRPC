@@ -1,0 +1,152 @@
+﻿syntax = "proto3";
+ 
+package service;
+ 
+import "google/protobuf/empty.proto";
+ 
+service DBService{
+  rpc CreateDB(CreateDBRequest) returns (CreateDBReply);
+  rpc GetDBs(google.protobuf.Empty) returns (DBsReply);
+  rpc AddTable(CreateTableRequest) returns (ResultReply);
+  rpc GetTable(GetTableRequest) returns (TableReply);
+  rpc GetTables(GetTablesRequest) returns (TablesReply);
+  rpc GetTypes(google.protobuf.Empty) returns (TypesReply);
+  rpc AddColumn(AddColumnRequest) returns (ResultReply);
+  rpc AddRow(AddRowRequest) returns (ResultReply);
+  rpc ChangeValue(ChangeValueRequest) returns (ResultReply);
+  //rpc DeleteColumn(DeleteColumnRequest) returns (ResultReply);
+  //rpc DeleteRow(DeleteRowRequest) returns (ResultReply);
+  rpc DeleteTable(DeleteTableRequest) returns (ResultReply);
+  rpc SaveDB(SaveDBRequest) returns (ResultReply);
+  rpc OpenDB(OpenDBRequest) returns (DBReply);
+  rpc GetTablesField(GetTablesFieldRequest) returns (TablesFieldReply);
+  rpc UnionOfTables(UnionOfTablesRequest) returns (TableReply);
+}
+
+message CreateDBRequest{
+  string name = 1;
+}
+
+message CreateTableRequest{
+  string name = 1;
+  int32 dbId = 2;
+}
+ 
+message GetTableRequest{
+  int32 tableId = 1;
+}
+
+message GetTablesRequest{
+  int32 dbId = 1;
+}
+ 
+message AddColumnRequest{
+  int32 tableId = 1;
+  string name = 2;
+  int32 typeId = 3;
+}
+ 
+message AddRowRequest{
+  int32 tableId = 1;
+}
+
+message ChangeValueRequest{
+  string newValue = 1;
+  int32 tableId = 2;
+  int32 columnId = 3;
+  int32 rIndex = 4;
+}
+
+message DeleteColumnRequest{
+  int32 columnId = 1;
+}
+
+message DeleteRowRequest{
+  int32 tIndex = 1;
+  int32 rIndex = 2;
+}
+
+message DeleteTableRequest{
+  int32 tableId = 1;
+}
+
+message SaveDBRequest{
+  int32 id = 1;
+}
+
+message OpenDBRequest{
+  string path = 1;
+}
+
+message GetTablesFieldRequest{
+  int32 id1 = 1;
+  int32 id2 = 2;
+}
+
+message UnionOfTablesRequest{
+  int32 id1 = 1;
+  int32 id2 = 2;
+  string field = 3;
+}
+
+ 
+message CreateDBReply{
+  int32 id = 1;
+}
+
+message ResultReply{
+  bool result = 1;
+}
+ 
+message TableReply{
+  int32 id = 1;
+  string name = 2;
+  repeated ColumnReply Columns = 3;
+  repeated RowReply Rows = 4;
+}
+
+message TablesReply{
+  repeated TableReply Tables = 1;
+}
+
+message TypeReply{
+  int32 id = 1;
+  string name = 2;
+}
+
+message TypesReply{
+  repeated TypeReply Types = 1;
+}
+
+message RowReply{
+  int32 index = 1;
+  repeated RowValue values = 2;
+}
+
+message RowValue{
+  string value = 1;
+}
+
+message ColumnReply{
+  int32 columnId = 1;
+  string name = 2;
+  string type = 3;
+}
+
+message DBReply{
+  int32 id = 1;
+  string name = 2;
+  int32 tablesCount = 3;
+}
+
+message DBsReply{
+  repeated DBReply DBs = 1;
+}
+
+message TablesFieldReply{
+  repeated FieldReply fields = 1;
+}
+
+message FieldReply{
+  string field = 1;
+}
